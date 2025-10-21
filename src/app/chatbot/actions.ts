@@ -8,7 +8,15 @@ export async function getChatbotResponse(input: AnswerStudentQueryInput): Promis
     return { success: true, data: result.answer };
   } catch (error) {
     console.error(error);
-    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred.';
+    let errorMessage = 'An unexpected error occurred.';
+    if (error instanceof Error) {
+      if (error.message.includes('API key not valid')) {
+        errorMessage = 'The AI chatbot is not configured correctly. An API key is required. Please add your Gemini API key to the .env file.';
+      } else {
+        errorMessage = error.message;
+      }
+    }
+    
     return { success: false, error: `Failed to get response: ${errorMessage}` };
   }
 }
