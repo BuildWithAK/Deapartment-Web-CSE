@@ -17,3 +17,14 @@ export const galleryImages = [
     { src: 'https://picsum.photos/seed/107/600/400', alt: 'A team celebrating after winning a hackathon.', hint: 'hackathon celebration' },
     { src: 'https://picsum.photos/seed/108/600/400', alt: 'An aerial view of the campus green.', hint: 'campus aerial' },
 ];
+
+export const faculty = [
+    { name: "Dr. Alan Grant", title: "Department Head", image: "https://picsum.photos/seed/f1/200/200", hint: "male professor" },
+    { name: "Dr. Ellie Sattler", title: "Professor, AI & ML", image: "https://picsum.photos/seed/f2/200/200", hint: "female professor" },
+    { name: "Dr. Ian Malcolm", title: "Professor, Systems & Architecture", image: "https://picsum.photos/seed/f3/200/200", hint: "male professor glasses" },
+    { name: "Dr. Sarah Harding", title: "Associate Professor, Cybersecurity", image: "https://picsum.photos/seed/f4/200/200", hint: "female professor smiling" },
+    { name: "Dr. John Hammond", title: "Professor Emeritus, Computer Vision", image: "https://picsum.photos/seed/f5/200/200", hint: "older professor" },
+    { name: "Dr. Robert Muldoon", title: "Lab Director", image: "https://picsum.photos/seed/f6/200/200", hint: "male professor serious" },
+    { name: "Dr. Henry Wu", title: "Professor, Bioinformatics", image: "https://picsum.photos/seed/f7/200/200", hint: "male scientist" },
+    { name: "Dr. Lewis Dodgson", title: "Visiting Professor, Ethics in AI", image: "https://picsum.photos/seed/f8/200/200", hint: "professor suit" },
+];

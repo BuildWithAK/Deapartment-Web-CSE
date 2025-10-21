@@ -1,13 +1,9 @@
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, BookOpen, FlaskConical } from "lucide-react";
-
-const faculty = [
-    { name: "Dr. Alan Grant", title: "Department Head", image: "https://picsum.photos/seed/f1/200/200", hint: "male professor" },
-    { name: "Dr. Ellie Sattler", title: "Professor, AI & ML", image: "https://picsum.photos/seed/f2/200/200", hint: "female professor" },
-    { name: "Dr. Ian Malcolm", title: "Professor, Systems & Architecture", image: "https://picsum.photos/seed/f3/200/200", hint: "male professor glasses" },
-    { name: "Dr. Sarah Harding", title: "Associate Professor, Cybersecurity", image: "https://picsum.photos/seed/f4/200/200", hint: "female professor smiling" },
-];
+import { Users, BookOpen, FlaskConical, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { faculty } from "@/lib/data";
 
 export default function AboutPage() {
     return (
@@ -101,7 +97,7 @@ export default function AboutPage() {
                         </p>
                     </div>
                     <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-                        {faculty.map((member) => (
+                        {faculty.slice(0, 4).map((member) => (
                             <div key={member.name} className="text-center">
                                 <div className="relative h-40 w-40 mx-auto rounded-full overflow-hidden mb-4">
                                     <Image src={member.image} alt={member.name} fill className="object-cover" data-ai-hint={member.hint} />
@@ -110,6 +106,13 @@ export default function AboutPage() {
                                 <p className="text-sm text-muted-foreground">{member.title}</p>
                             </div>
                         ))}
+                    </div>
+                    <div className="text-center mt-8">
+                        <Button asChild variant="outline">
+                            <Link href="/faculty">
+                                View All Faculty <ArrowRight className="ml-2" />
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </section>

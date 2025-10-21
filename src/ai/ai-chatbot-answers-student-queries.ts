@@ -29,7 +29,7 @@ const prompt = ai.definePrompt({
   name: 'answerStudentQueryPrompt',
   input: {schema: AnswerStudentQueryInputSchema},
   output: {schema: AnswerStudentQueryOutputSchema},
-  prompt: `You are a helpful AI chatbot for the Computer Science and Engineering (CSE) department of an Engineering College.
+  prompt: `You are a helpful AI chatbot for the Department of CSE at Sanjeevan group of institutions panhal, kolhapur.
   Your goal is to provide accurate and concise answers to student questions about the department, including course information, faculty details, campus resources, and other relevant topics.
   Use the following information to answer the question:
   
