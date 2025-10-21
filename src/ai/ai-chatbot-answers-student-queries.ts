@@ -30,13 +30,13 @@ const prompt = ai.definePrompt({
   name: 'answerStudentQueryPrompt',
   input: {schema: AnswerStudentQueryInputSchema},
   output: {schema: AnswerStudentQueryOutputSchema},
-  prompt: `You are a helpful AI chatbot for the Department of CSE at Sanjeevan group of institutions panhal, kolhapur.
+  prompt: `You are a helpful AI chatbot for the Department of CSE at Sanjeevan group of institutions panhala, kolhapur.
   Your goal is to provide accurate and concise answers to student questions about the department, including course information, faculty details, campus resources, and other relevant topics.
   Use the following information to answer the question:
 
   Available Information:
   - Department Name: Department of CSE
-  - College Name: Sanjeevan group of institutions panhal, kolhapur
+  - College Name: Sanjeevan group of institutions panhala, kolhapur
 
   Faculty List:
   {{#each faculty}}
@@ -51,6 +51,8 @@ const prompt = ai.definePrompt({
   Question: {{{query}}}
 
   Based on the information provided, please answer the student's question. If the information is not available, say that you do not have that information.
+  Be helpful and friendly.
+  If the user asks for the college name, respond with "Sanjeevan group of institutions panhala, kolhapur".
   `,
 });
 

@@ -2,10 +2,11 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetTrigger } from "@/components/ui/sheet";
-import { Bot, Send } from 'lucide-react';
+import { Bot, Send, Loader2 } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { getChatbotResponse } from '@/app/chatbot/actions';
 
 interface Message {
     text: string;
@@ -17,17 +18,32 @@ export function Chatbot() {
         { text: 'Hello! How can I help you today with the CSE department?', sender: 'bot' }
     ]);
     const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSend = () => {
+    const handleSend = async () => {
         if (input.trim() === '') return;
-        const newMessages: Message[] = [...messages, { text: input, sender: 'user' }];
-        setMessages(newMessages);
-        setInput('');
 
-        // Mock bot response
-        setTimeout(() => {
-            setMessages(prev => [...prev, { text: 'Thanks for your message! This is a demo. An AI response would appear here.', sender: 'bot' }]);
-        }, 1000);
+        const userMessage: Message = { text: input, sender: 'user' };
+        setMessages(prev => [...prev, userMessage]);
+        setInput('');
+        setIsLoading(true);
+
+        try {
+            const result = await getChatbotResponse({ query: input });
+
+            if (result.success && result.data) {
+                const botMessage: Message = { text: result.data, sender: 'bot' };
+                setMessages(prev => [...prev, botMessage]);
+            } else {
+                const errorMessage: Message = { text: result.error || 'Sorry, something went wrong.', sender: 'bot' };
+                setMessages(prev => [...prev, errorMessage]);
+            }
+        } catch (error) {
+             const errorMessage: Message = { text: 'An error occurred while fetching the response.', sender: 'bot' };
+             setMessages(prev => [...prev, errorMessage]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -64,6 +80,18 @@ export function Chatbot() {
                                 </div>
                             </div>
                         ))}
+                         {isLoading && (
+                            <div className="flex items-end gap-2">
+                                <Avatar className="h-8 w-8">
+                                    <AvatarFallback className="bg-primary text-primary-foreground">
+                                        <Bot className="h-5 w-5" />
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="max-w-xs rounded-lg p-3 bg-muted">
+                                    <Loader2 className="h-5 w-5 animate-spin" />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </ScrollArea>
                 <SheetFooter>
@@ -76,8 +104,9 @@ export function Chatbot() {
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type a message..."
                             aria-label="Chat message"
+                            disabled={isLoading}
                         />
-                        <Button type="submit" size="icon" aria-label="Send message">
+                        <Button type="submit" size="icon" aria-label="Send message" disabled={isLoading}>
                             <Send className="h-4 w-4" />
                         </Button>
                     </form>
