@@ -23,7 +23,7 @@ export default function Home() {
         <div className="absolute inset-0 flex items-end justify-center pb-16">
           <div className="container text-center">
             <h1 className="text-4xl font-bold tracking-tight font-headline sm:text-5xl md:text-6xl lg:text-7xl">
-              Computer Science & Engineering
+              Computer Science & Engineering ak aviii
             </h1>
             <p className="mt-4 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl">
               Innovating the future, one line of code at a time. Welcome to the hub of technology and creativity.
