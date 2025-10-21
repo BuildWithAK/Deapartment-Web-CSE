@@ -10,14 +10,15 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { faculty, events } from '@/lib/data';
 
 const AnswerStudentQueryInputSchema = z.object({
-  query: z.string().describe('The student\u2019s question about the CSE department.'),
+  query: z.string().describe('The student’s question about the CSE department.'),
 });
 export type AnswerStudentQueryInput = z.infer<typeof AnswerStudentQueryInputSchema>;
 
 const AnswerStudentQueryOutputSchema = z.object({
-  answer: z.string().describe('The answer to the student\u2019s question.'),
+  answer: z.string().describe('The answer to the student’s question.'),
 });
 export type AnswerStudentQueryOutput = z.infer<typeof AnswerStudentQueryOutputSchema>;
 
@@ -32,8 +33,24 @@ const prompt = ai.definePrompt({
   prompt: `You are a helpful AI chatbot for the Department of CSE at Sanjeevan group of institutions panhal, kolhapur.
   Your goal is to provide accurate and concise answers to student questions about the department, including course information, faculty details, campus resources, and other relevant topics.
   Use the following information to answer the question:
-  
+
+  Available Information:
+  - Department Name: Department of CSE
+  - College Name: Sanjeevan group of institutions panhal, kolhapur
+
+  Faculty List:
+  {{#each faculty}}
+  - Name: {{name}}, Title: {{title}}
+  {{/each}}
+
+  Upcoming Events:
+  {{#each events}}
+  - Event: {{title}} on {{date}}. Description: {{description}}
+  {{/each}}
+
   Question: {{{query}}}
+
+  Based on the information provided, please answer the student's question. If the information is not available, say that you do not have that information.
   `,
 });
 
@@ -44,7 +61,11 @@ const answerStudentQueryFlow = ai.defineFlow(
     outputSchema: AnswerStudentQueryOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await prompt({
+      ...input,
+      faculty,
+      events
+    });
     return output!;
   }
 );
